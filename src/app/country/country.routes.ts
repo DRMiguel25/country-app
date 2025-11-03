@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
-import { CountryPage } from './pages/country-page/country-page';
+import { CountryLayout } from './layouts/CountryLayout/CountryLayout';
 import { ByCapitalPage } from './pages/by-capital-page/by-capital-page';
 import { ByCountryPage } from './pages/by-country-page/by-country-page';
 import { ByRegionPage } from './pages/by-region-page/by-region-page';
+import { CountryPage } from './pages/country-page/country-page';
 
 export const countryRoutes: Routes = [
   {
     path: '',
-    component: CountryPage,
+    component: CountryLayout,
     children: [
       {
         path: '',
@@ -25,6 +26,10 @@ export const countryRoutes: Routes = [
       {
         path: 'by-region',
         component: ByRegionPage
+      },
+      {
+        path: ':id',
+        component: CountryPage
       }
     ]
   }

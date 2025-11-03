@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MenuHead } from '../../components/menu-head/menu-head';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+
 @Component({
   selector: 'app-country-page',
-  imports: [MenuHead, RouterOutlet],
-  templateUrl: './country-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
+  templateUrl: './country-page.html'
 })
-export class CountryPage { }
+export class CountryPage {
+  // Lógica para mostrar detalles de un país específico
+}
