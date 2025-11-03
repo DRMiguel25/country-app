@@ -1,18 +1,23 @@
 <div class="min-h-screen flex flex-col">
   <main class="flex-1 p-6">
-    <h1 class="text-3xl font-bold underline mb-6">
-      Hello world!
-    </h1>
-
-    <div class="space-x-2">
-      <button class="btn btn-active">Default</button>
-      <button class="btn btn-active btn-primary">Primary</button>
-      <button class="btn btn-active btn-secondary">Secondary</button>
-      <button class="btn btn-active btn-accent">Accent</button>
-      <button class="btn btn-active btn-info">Info</button>
-      <button class="btn btn-active btn-success">Success</button>
-      <button class="btn btn-active btn-warning">Warning</button>
-      <button class="btn btn-active btn-error">Error</button>
+    <div
+      class="hero min-h-screen"
+      style="
+        background-image: url('https://imgs.search.brave.com/CRZ6ZwGFnyK_KnwVKRZi2f0BWw56mi5HflBAGdRUgbs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNDYw/NjYwMDkzL2VzL2Zv/dG8vcGlyJUMzJUEx/bWlkZS1kZS1sYS1s/dW5hLXRlb3RpaHVh/YyVDMyVBMW4uanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPWpx/OVY3UXR0anR2N1da/Qno1OWdZQ3JYNm9z/dk0yWEQ0QzUwa0NZ/YWtHVHM9');
+        background-size: cover;
+        background-position: center;
+      "
+    >
+      <div class="hero-content text-center">
+        <div class="max-w-md text-white">
+          <h1 class="text-5xl font-bold">Aplicacion de paises</h1>
+          <p class="py-6">
+            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
+            quasi. In deleniti eaque aut repudiandae et a id nisi.
+          </p>
+          <button (click)="goToCountry()" class="btn btn-primary">Empezar</button>
+        </div>
+      </div>
     </div>
   </main>
 
