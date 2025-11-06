@@ -1,65 +1,43 @@
-import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
-export interface Country {
-  name: string;
-  capital: string;
-  population: number;
-  flag: string;
-  code: string;
-}
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { CountryService } from '../../../shared/services/country';
+import { Footer } from '../../../shared/components/footer/footer';
+import { SearchInput } from '../../components/search-input/search-input';
+import { CountryList } from '../../components/country-list/country-list';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-by-capital-page',
-  imports: [CommonModule],
-  templateUrl: './by-capital-page.html'
+  standalone: true,
+  imports: [Footer, SearchInput, CountryList, FormsModule, HttpClientModule],
+  templateUrl: './by-capital-page.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ByCapitalPage {
-  countries = signal<Country[]>([]);
-  isLoading = signal(false);
-  searchTerm = signal('');
+  countries: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private countryService: CountryService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  onInputChange(value: string): void {
-    this.searchTerm.set(value);
-  }
+  onSearch(term: string) {
+  const cleanTerm = term.trim();
+  console.log('🔍 Buscando capital:', cleanTerm);
 
-  handleSearch(): void {
-    const term = this.searchTerm().trim();
-    
-    if (term === '') {
-      this.countries.set([]);
-      return;
-    }
+  this.countryService.searchByCapital(cleanTerm).subscribe({
+    next: (data) => {
+      console.log('✅ Respuesta de la API:', data);
+      this.countries = data;
+      this.cdr.markForCheck(); 
+    },
+    error: (error) => {
+      console.error('❌ Error al obtener países:', error);
+      this.countries = [];
+      this.cdr.markForCheck();
+    },
+    complete: () => console.log('🏁 Búsqueda completada'),
+  });
+}
 
-    this.isLoading.set(true);
-    
-    // Aquí llamarías a tu servicio para buscar países por capital
-    // Por ahora, simulamos datos de ejemplo
-    setTimeout(() => {
-      this.countries.set([
-        {
-          name: 'México',
-          capital: 'Ciudad de México',
-          population: 128932753,
-          flag: 'https://flagcdn.com/w320/mx.png',
-          code: 'mx'
-        },
-        {
-          name: 'Argentina',
-          capital: 'Buenos Aires',
-          population: 45376763,
-          flag: 'https://flagcdn.com/w320/ar.png',
-          code: 'ar'
-        }
-      ]);
-      this.isLoading.set(false);
-    }, 500);
-  }
-
-  viewCountry(code: string): void {
-    this.router.navigate(['/countries', code]);
-  }
 }

@@ -1,21 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
-export interface Country {
-  name: string;
-  capital: string;
-  population: number;
-  flag: string;
-  code: string;
-}
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-country-list',
-  imports: [CommonModule, RouterLink],
-  templateUrl: './country-list.html'
+  imports: [NgFor],
+  templateUrl: './country-list.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CountryListComponent {
-  @Input() countries: Country[] = [];
-  @Input() isLoading: boolean = false;
+export class CountryList {
+  @Input() countries: any[] = [];
 }

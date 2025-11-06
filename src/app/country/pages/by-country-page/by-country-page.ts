@@ -1,49 +1,39 @@
-import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
-export interface Country {
-  name: string;
-  capital: string;
-  population: number;
-  flag: string;
-  code: string;
-}
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { CountryService } from '../../../shared/services/country';
+import { Footer } from '../../../shared/components/footer/footer';
+import { SearchInput } from '../../components/search-input/search-input';
+import { CountryList } from '../../components/country-list/country-list';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-by-country-page',
-  imports: [CommonModule],
-  templateUrl: './by-country-page.html'
+  imports: [Footer, SearchInput, CountryList, FormsModule, HttpClientModule],
+  templateUrl: './by-country-page.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ByCountryPage {
-  countries = signal<Country[]>([]);
-  isLoading = signal(false);
-  searchTerm = signal('');
+    countries: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private countryService: CountryService) {}
 
-  onInputChange(value: string): void {
-    this.searchTerm.set(value);
-  }
+  onSearch(term: string) {
+  console.log('🔍 Buscando país:', term);
 
-  handleSearch(): void {
-    const term = this.searchTerm().trim();
-    
-    if (term === '') {
-      this.countries.set([]);
-      return;
-    }
+  this.countryService.searchCountry(term).subscribe({
+    next: (data) => {
+      // Si hay región guardada, filtramos
+      if (this.countryService.lastRegion) {
+        data = data.filter(country =>
+          country.region.toLowerCase() === this.countryService.lastRegion.toLowerCase()
+        );
+      }
 
-    this.isLoading.set(true);
-    
-    // Aquí llamarías a tu servicio
-    setTimeout(() => {
-      this.countries.set([]);
-      this.isLoading.set(false);
-    }, 500);
-  }
+      this.countries = data;
+    },
+    error: () => (this.countries = []),
+  });
+}
 
-  viewCountry(code: string): void {
-    this.router.navigate(['/countries', code]);
-  }
+
 }

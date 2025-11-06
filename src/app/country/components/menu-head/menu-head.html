@@ -1,61 +1,41 @@
-<div class="navbar bg-base-100 shadow-lg">
-  <div class="navbar-start">
-    <a routerLink="/" class="btn btn-ghost text-xl">Country App</a>
-  </div>
-  
-  <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
-      <li>
-        <a 
-          routerLink="/countries/by-capital" 
-          routerLinkActive="active"
-          class="flex items-center gap-2"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-          </svg>
-          Por capital
-        </a>
-      </li>
-      <li>
-        <a 
-          routerLink="/countries/by-country" 
-          routerLinkActive="active"
-          class="flex items-center gap-2"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-          </svg>
-          Por país
-        </a>
-      </li>
-      <li>
-        <a 
-          routerLink="/countries/by-region" 
-          routerLinkActive="active"
-          class="flex items-center gap-2"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Por región
-        </a>
-      </li>
-    </ul>
-  </div>
-  
-  <div class="navbar-end">
-    <div class="dropdown dropdown-end lg:hidden">
-      <label tabindex="0" class="btn btn-ghost">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+<nav class="p-4 w-full">
+    <ul class="menu bg-base-200 lg:menu-horizontal rounded-box">
+    <li>
+        <a routerLink="./by-capital" routerLinkActive="active" class="[&.active]:text-purple-700 [&.active]:bg-purple-100 [&.active]:font-semibold hover:text-purple-600 transition-colors">
+        <!-- Icono de ciudad/edificios -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18"/>
+            <path d="M5 21V7l8-4v18"/>
+            <path d="M19 21V11l-6-4"/>
+            <path d="M9 9v.01"/>
+            <path d="M9 12v.01"/>
+            <path d="M9 15v.01"/>
+            <path d="M9 18v.01"/>
         </svg>
-      </label>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a routerLink="/countries/by-capital" routerLinkActive="active">Por capital</a></li>
-        <li><a routerLink="/countries/by-country" routerLinkActive="active">Por país</a></li>
-        <li><a routerLink="/countries/by-region" routerLinkActive="active">Por región</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+        Estados por capital
+        </a>
+    </li>
+    <li>
+        <a routerLink="./by-country" routerLinkActive="active" class="[&.active]:text-purple-700 [&.active]:bg-purple-100 [&.active]:font-semibold hover:text-purple-600 transition-colors">
+        <!-- Icono de globo terráqueo -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+            <path d="M2 12h20"/>
+        </svg>
+        Estados por país
+        </a>
+    </li>
+    <li>
+        <a routerLink="./by-region" routerLinkActive="active" class="menu-link [&.active]:text-purple-700 [&.active]:bg-purple-100 [&.active]:font-semibold hover:text-purple-600 transition-colors">
+        <!-- Icono de mapa -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/>
+            <path d="M9 3v15"/>
+            <path d="M15 6v15"/>
+        </svg>
+        Estados por región
+        </a>
+    </li>
+    </ul>
+</nav>

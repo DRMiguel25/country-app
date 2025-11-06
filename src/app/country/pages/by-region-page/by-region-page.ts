@@ -1,52 +1,44 @@
-import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-
-export interface Country {
-  name: string;
-  capital: string;
-  population: number;
-  flag: string;
-  code: string;
-}
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { CountryService } from '../../../shared/services/country';
+import { Footer } from '../../../shared/components/footer/footer';
+import { CountryList } from '../../components/country-list/country-list';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-by-region-page',
-  imports: [CommonModule],
-  templateUrl: './by-region-page.html'
+  imports: [Footer, CountryList, FormsModule, HttpClientModule],
+  templateUrl: './by-region-page.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ByRegionPage {
-  countries = signal<Country[]>([]);
-  isLoading = signal(false);
-  selectedRegion = signal<string>('');
+export class ByRegionPage implements OnInit {
+  countries: any[] = [];
 
-  regions = [
-    { name: 'África', value: 'africa' },
-    { name: 'América', value: 'americas' },
-    { name: 'Asia', value: 'asia' },
-    { name: 'Europa', value: 'europe' },
-    { name: 'Oceanía', value: 'oceania' }
-  ];
+  constructor(
+    private countryService: CountryService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  constructor(private router: Router) {}
+  ngOnInit(): void {
+    console.log('🚀 Componente ByRegionPage inicializado');
 
-  selectRegion(region: string): void {
-    this.selectedRegion.set(region);
-    this.isLoading.set(true);
-    
-    // Aquí llamarías a tu servicio
-    setTimeout(() => {
-      this.countries.set([]);
-      this.isLoading.set(false);
-    }, 500);
+    this.onSearch('europe');
   }
 
-  clearFilter(): void {
-    this.selectedRegion.set('');
-    this.countries.set([]);
-  }
+  onSearch(region: string) {
+    console.log('🌎 Buscando región:', region);
 
-  viewCountry(code: string): void {
-    this.router.navigate(['/countries', code]);
+    this.countryService.searchByRegion(region).subscribe({
+      next: (data) => {
+        console.log('✅ Respuesta de la API:', data);
+        this.countries = data;
+
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        this.countries = [];
+        this.cdr.markForCheck();
+      },
+    });
   }
 }
