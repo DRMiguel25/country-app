@@ -15,13 +15,13 @@ export class CountryService {
 
   searchCountry(country: string) {
     const url = `${API_URL}/name/${encodeURIComponent(country)}`;
-    console.log('🌍 Fetching URL:', url);
+    console.log(' Fetching URL:', url);
     return this.http.get<any[]>(url);
   }
 
   searchByCapital(capital: string) {
     const url = `${API_URL}/capital/${encodeURIComponent(capital)}`;
-    console.log('🌍 Fetching URL:', url);
+    console.log(' Fetching URL:', url);
     return this.http.get<any[]>(url);
   }
 
@@ -30,7 +30,7 @@ export class CountryService {
     this.lastRegion = region;
 
     const url = `${API_URL}/region/${encodeURIComponent(region)}`;
-    console.log('🌍 Fetching URL:', url);
+    console.log(' Fetching URL:', url);
     return this.http.get<any[]>(url);
   }
 }

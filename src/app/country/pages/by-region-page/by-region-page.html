@@ -1,7 +1,23 @@
-<div class="flex flex-col min-h-screen">
-  <main class="flex-1 p-4">
-    <app-country-list [countries]="countries"></app-country-list>
+<div class="flex flex-col min-h-screen bg-base-100">
+  <main class="flex-1 pb-4">
+    <div class="sticky top-0 z-40 bg-base-100/95 backdrop-blur-sm border-b border-base-300 p-4 md:p-6 shadow-md">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-2xl font-bold text-base-content mb-4">Estados por Región</h2>
+        <div class="flex flex-wrap gap-2">
+          <button 
+            *ngFor="let region of regions"
+            (click)="onSearch(region)"
+            [class.btn-primary]="selectedRegion === region"
+            [class.btn-outline]="selectedRegion !== region"
+            class="btn btn-sm md:btn-md transition-all duration-300 hover:shadow-md">
+            {{ region }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="px-4 md:px-6 max-w-7xl mx-auto w-full">
+      <app-country-list [countries]="countries"></app-country-list>
+    </div>
   </main>
-
-  <app-footer class="mt-4"></app-footer>
+  <app-footer></app-footer>
 </div>

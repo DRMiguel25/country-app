@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-country-list',
-  imports: [NgFor],
+  imports: [NgFor, NgIf, DecimalPipe],
   templateUrl: './country-list.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -22,22 +22,20 @@ export class ByCapitalPage {
   ) {}
 
   onSearch(term: string) {
-  const cleanTerm = term.trim();
-  console.log('🔍 Buscando capital:', cleanTerm);
+    const cleanTerm = term.trim();
+    console.log('🏛️ Buscando capital:', cleanTerm);
 
-  this.countryService.searchByCapital(cleanTerm).subscribe({
-    next: (data) => {
-      console.log('✅ Respuesta de la API:', data);
-      this.countries = data;
-      this.cdr.markForCheck(); 
-    },
-    error: (error) => {
-      console.error('❌ Error al obtener países:', error);
-      this.countries = [];
-      this.cdr.markForCheck();
-    },
-    complete: () => console.log('🏁 Búsqueda completada'),
-  });
-}
-
+    this.countryService.searchByCapital(cleanTerm).subscribe({
+      next: (data) => {
+        this.countries = data;
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        console.error('Error al obtener países:', error);
+        this.countries = [];
+        this.cdr.markForCheck();
+      },
+      complete: () => console.log('Búsqueda completada'),
+    });
+  }
 }

@@ -1,12 +1,31 @@
-<div class="flex gap-2 items-center">
-  <label class="input flex-1 flex items-center gap-2">
-    <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+<div class="w-full sticky top-0 z-40 bg-base-100/95 backdrop-blur-sm border-b border-base-300 p-4 md:p-6 shadow-md animate-slideDown">
+  <div class="flex flex-col md:flex-row gap-3 md:gap-2 items-stretch md:items-center max-w-4xl mx-auto">
+    <label class="input input-bordered flex-1 flex items-center gap-2 bg-base-100 border-2 border-base-300 hover:border-primary transition-colors duration-300 focus-within:border-primary">
+      <svg class="h-5 w-5 opacity-60 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"></circle>
         <path d="m21 21-4.3-4.3"></path>
-      </g>
-    </svg>
-    <input type="search" [(ngModel)]="term" (keyup.enter)="onSearch()" placeholder="Buscar por capital..." class="flex-1" />
-  </label>
-  <button class="btn btn-info" (click)="onSearch()">Buscar</button>
+      </svg>
+      <input 
+        type="text" 
+        [(ngModel)]="term" 
+        (keyup.enter)="onSearch()" 
+        placeholder="Buscar por país, capital..." 
+        class="flex-1 bg-transparent text-base-content placeholder-base-content/40"
+        [disabled]="isSearching" />
+    </label>
+    <button 
+      (click)="onSearch()" 
+      [disabled]="isSearching || !term.trim()"
+      class="btn btn-primary btn-block md:btn-wide gap-2 transition-all duration-300"
+      [class.loading]="isSearching">
+      <span *ngIf="!isSearching">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        Buscar
+      </span>
+      <span *ngIf="isSearching" class="loading loading-spinner loading-sm"></span>
+    </button>
+  </div>
 </div>

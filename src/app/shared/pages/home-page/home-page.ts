@@ -14,4 +14,4 @@ export class HomePage {
   goToCountry() {
     this.router.navigate(['/country']);
   }
- }
+}
