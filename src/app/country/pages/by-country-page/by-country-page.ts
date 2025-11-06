@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CountryService } from '../../../shared/services/country';
 import { Footer } from '../../../shared/components/footer/footer';
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryList } from '../../components/country-list/country-list';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-by-country-page',
@@ -15,25 +16,30 @@ import { FormsModule } from '@angular/forms';
 export class ByCountryPage {
     countries: any[] = [];
 
-  constructor(private countryService: CountryService) {}
+  constructor(
+    private countryService: CountryService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   onSearch(term: string) {
-  console.log('🔍 Buscando país:', term);
+    console.log('🔍 Buscando país:', term);
 
-  this.countryService.searchCountry(term).subscribe({
-    next: (data) => {
-      // Si hay región guardada, filtramos
-      if (this.countryService.lastRegion) {
-        data = data.filter(country =>
-          country.region.toLowerCase() === this.countryService.lastRegion.toLowerCase()
-        );
-      }
+    this.countryService.searchCountry(term).subscribe({
+      next: (data) => {
+        // Si hay región guardada, filtramos
+        if (this.countryService.lastRegion) {
+          data = data.filter(country =>
+            country.region.toLowerCase() === this.countryService.lastRegion.toLowerCase()
+          );
+        }
 
-      this.countries = data;
-    },
-    error: () => (this.countries = []),
-  });
-}
-
-
+        this.countries = data;
+        this.cdr.markForCheck(); 
+      },
+      error: () => {
+        this.countries = [];
+        this.cdr.markForCheck(); 
+      },
+    });
+  }
 }
