@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgFor, NgIf, DecimalPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Country } from '../../../shared/interfaces/country.interface';
 
 @Component({
   selector: 'app-country-list',
-  imports: [NgFor, NgIf, DecimalPipe],
+  imports: [],
   templateUrl: './country-list.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CountryList {
-  @Input() countries: any[] = [];
+  countries = input.required<Country[]>();
+
+
 }

@@ -1,69 +1,30 @@
-<div class="w-full mt-4 animate-fadeIn">
-  <!-- Mobile: Cards -->
-  <div class="grid grid-cols-1 md:hidden gap-3">
-    <div 
-      *ngFor="let c of countries; let i = index" 
-      class="card bg-base-100 border border-base-300 shadow-md hover:shadow-lg hover:border-primary transition-all duration-300 animate-slideUp"
-      [style.animation-delay]="(i * 50) + 'ms'">
-      <div class="card-body space-y-2 p-4">
-        <div class="flex items-center gap-3">
-          <img 
-            [src]="c.flags?.png" 
-            [alt]="c.name.common"
-            class="w-12 h-8 rounded-sm object-cover shadow-sm" />
-          <div class="flex-1">
-            <h3 class="font-bold text-base-content text-lg">{{ c.name.common }}</h3>
-            <p class="text-sm text-base-content/60">{{ c.region }}</p>
-          </div>
-        </div>
-        <div class="divider my-2"></div>
-        <div class="text-sm space-y-1">
-          <p><span class="font-semibold text-primary">Capital:</span> {{ c.capital?.[0] || 'N/A' }}</p>
-          <p><span class="font-semibold text-primary">Población:</span> {{ (c.population | number) || 'N/A' }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Desktop: Table -->
-  <div class="hidden md:block overflow-x-auto rounded-lg border border-base-300 shadow-lg">
-    <table class="table table-zebra w-full">
-      <thead class="bg-base-200">
+<div class="overflow-x-auto mt-4">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Bandera</th>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Región</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (country of countries(); track country.cca2; let index = $index) {
         <tr>
-          <th class="text-center">#</th>
-          <th>Bandera</th>
-          <th>País</th>
-          <th>Capital</th>
-          <th>Región</th>
-          <th class="text-right">Población</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr 
-          *ngFor="let c of countries; let i = index"
-          class="hover:bg-base-200/50 transition-colors duration-200 animate-fadeIn"
-          [style.animation-delay]="(i * 30) + 'ms'">
-          <th class="text-center">{{ i + 1 }}</th>
+          <td>{{ index + 1 }}</td>
           <td>
-            <img 
-              [src]="c.flags?.png" 
-              [alt]="c.name.common"
-              class="w-12 h-7 rounded-sm object-cover shadow-sm hover:shadow-md transition-shadow" />
+            <img
+              [src]="country.flagSvg"
+              [alt]="country.name + ' flag'"
+              width="50"
+            />
           </td>
-          <td class="font-semibold">{{ c.name.common }}</td>
-          <td>{{ c.capital?.[0] || 'N/A' }}</td>
-          <td>{{ c.region }}</td>
-          <td class="text-right text-sm">{{ (c.population | number) || 'N/A' }}</td>
+          <td>{{ country.name }}</td>
+          <td>{{ country.capital }}</td>
+          <td>{{ country.region }}</td>
         </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Empty State -->
-  <div 
-    *ngIf="countries.length === 0"
-    class="text-center py-12 animate-fadeIn">
-    <div class="text-6xl mb-4">🌍</div>
-    <p class="text-base-content/60 text-lg">No se encontraron países</p>
-  </div>
+      }
+    </tbody>
+  </table>
 </div>

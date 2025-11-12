@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CountryService } from '../../../shared/services/country';
 import { Footer } from '../../../shared/components/footer/footer';
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryList } from '../../components/country-list/country-list';
 import { FormsModule } from '@angular/forms';
+import { Country } from '../../../shared/interfaces/country.interface';
 
 @Component({
   selector: 'app-by-country-page',
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ByCountryPage {
-  countries: any[] = [];
+  countries: Country[] = [];
 
   constructor(
     private countryService: CountryService,
@@ -24,19 +25,17 @@ export class ByCountryPage {
     console.log('🔍 Buscando país:', term);
 
     this.countryService.searchCountry(term).subscribe({
-      next: (data) => {
-        if (this.countryService.lastRegion) {
-          data = data.filter(country =>
-            country.region.toLowerCase() === this.countryService.lastRegion.toLowerCase()
-          );
-        }
-        this.countries = data;
-        this.cdr.markForCheck();
-      },
-      error: () => {
-        this.countries = [];
-        this.cdr.markForCheck();
-      },
+    next: (data) => {
+      console.log('✅ Respuesta de la API:', data);
+      this.countries = data;
+      this.cdr.markForCheck(); 
+    },
+    error: (error) => {
+      console.error('❌ Error al obtener países:', error);
+      this.countries = [];
+      this.cdr.markForCheck();
+    },
+    complete: () => console.log('🏁 Búsqueda completada'),
     });
   }
 }

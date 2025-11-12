@@ -5,6 +5,7 @@ import { Footer } from '../../../shared/components/footer/footer';
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryList } from '../../components/country-list/country-list';
 import { FormsModule } from '@angular/forms';
+import { Country } from '../../../shared/interfaces/country.interface';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ByCapitalPage {
-  countries: any[] = [];
+  countries: Country[] = [];
 
   constructor(
     private countryService: CountryService,
@@ -22,20 +23,22 @@ export class ByCapitalPage {
   ) {}
 
   onSearch(term: string) {
-    const cleanTerm = term.trim();
-    console.log('🏛️ Buscando capital:', cleanTerm);
+  const cleanTerm = term.trim();
+  console.log('🔍 Buscando capital:', cleanTerm);
 
-    this.countryService.searchByCapital(cleanTerm).subscribe({
-      next: (data) => {
-        this.countries = data;
-        this.cdr.markForCheck();
-      },
-      error: (error) => {
-        console.error('Error al obtener países:', error);
-        this.countries = [];
-        this.cdr.markForCheck();
-      },
-      complete: () => console.log('Búsqueda completada'),
-    });
-  }
+  this.countryService.searchByCapital(cleanTerm).subscribe({
+    next: (data) => {
+      console.log('✅ Respuesta de la API:', data);
+      this.countries = data;
+      this.cdr.markForCheck(); 
+    },
+    error: (error) => {
+      console.error('❌ Error al obtener países:', error);
+      this.countries = [];
+      this.cdr.markForCheck();
+    },
+    complete: () => console.log('🏁 Búsqueda completada'),
+  });
+}
+
 }
